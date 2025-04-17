@@ -7,6 +7,7 @@ interface ParticleProps {
   size: number;
   position: { x: number; y: number };
   velocity: { x: number; y: number };
+  rotation: number;
 }
 
 const AnimatedBackground: React.FC = () => {
@@ -15,12 +16,11 @@ const AnimatedBackground: React.FC = () => {
   const particlesRef = useRef<ParticleProps[]>([]);
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  // Setup particles on mount
   useEffect(() => {
     if (!containerRef.current) return;
 
     const createParticles = () => {
-      const numParticles = 80;
+      const numParticles = 60; // Reduced for better performance
       const particles: ParticleProps[] = [];
       const container = containerRef.current;
       
@@ -30,23 +30,22 @@ const AnimatedBackground: React.FC = () => {
 
       for (let i = 0; i < numParticles; i++) {
         particles.push({
-          color: `rgba(4, 19, 242, ${Math.random() * 0.3 + 0.1})`,
-          size: Math.random() * 4 + 1,
+          color: `rgba(4, 19, 242, ${Math.random() * 0.4 + 0.1})`,
+          size: Math.random() * 6 + 2, // Slightly larger particles
           position: {
             x: Math.random() * width,
             y: Math.random() * height,
           },
           velocity: {
-            x: (Math.random() - 0.5) * 0.5,
-            y: (Math.random() - 0.5) * 0.5,
+            x: (Math.random() - 0.5) * 1.5, // Increased speed
+            y: (Math.random() - 0.5) * 1.5,
           },
+          rotation: Math.random() * 360, // Added rotation
         });
       }
 
       return particles;
     };
-
-    particlesRef.current = createParticles();
 
     const handleMouseMove = (e: MouseEvent) => {
       const container = containerRef.current;
@@ -66,6 +65,8 @@ const AnimatedBackground: React.FC = () => {
     window.addEventListener("resize", handleResize);
     document.addEventListener("mousemove", handleMouseMove);
 
+    particlesRef.current = createParticles();
+
     return () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mousemove", handleMouseMove);
@@ -73,7 +74,6 @@ const AnimatedBackground: React.FC = () => {
     };
   }, []);
 
-  // Animation loop
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -89,34 +89,47 @@ const AnimatedBackground: React.FC = () => {
         particle.position.x += particle.velocity.x;
         particle.position.y += particle.velocity.y;
 
-        // Mouse interaction
+        // Mouse repulsion with swirl effect
         const dx = mouseX - particle.position.x;
         const dy = mouseY - particle.position.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 150;
+        const maxDistance = 200; // Increased interaction radius
 
         if (distance < maxDistance) {
           const force = (maxDistance - distance) / maxDistance;
-          particle.velocity.x -= (dx / distance) * force * 0.02;
-          particle.velocity.y -= (dy / distance) * force * 0.02;
+          const angle = Math.atan2(dy, dx);
+          
+          // Add swirl effect
+          particle.velocity.x -= (Math.cos(angle + Math.PI/2) * force * 0.5);
+          particle.velocity.y -= (Math.sin(angle + Math.PI/2) * force * 0.5);
+          
+          // Update rotation based on velocity
+          particle.rotation += (Math.abs(particle.velocity.x) + Math.abs(particle.velocity.y)) * 2;
         }
 
-        // Boundary check
-        if (particle.position.x < 0 || particle.position.x > width) {
-          particle.velocity.x *= -1;
+        // Boundary behavior with bounce effect
+        if (particle.position.x <= 0 || particle.position.x >= width) {
+          particle.velocity.x *= -0.8; // Bounce with energy loss
+          particle.position.x = Math.max(0, Math.min(width, particle.position.x));
         }
-        if (particle.position.y < 0 || particle.position.y > height) {
-          particle.velocity.y *= -1;
+        if (particle.position.y <= 0 || particle.position.y >= height) {
+          particle.velocity.y *= -0.8; // Bounce with energy loss
+          particle.position.y = Math.max(0, Math.min(height, particle.position.y));
         }
 
-        // Apply friction
-        particle.velocity.x *= 0.99;
-        particle.velocity.y *= 0.99;
+        // Apply friction and minimum speed
+        const friction = 0.98;
+        particle.velocity.x *= friction;
+        particle.velocity.y *= friction;
+
+        // Add random movement
+        if (Math.random() < 0.01) {
+          particle.velocity.x += (Math.random() - 0.5) * 0.5;
+          particle.velocity.y += (Math.random() - 0.5) * 0.5;
+        }
       });
 
-      // Force render
       container.style.transform = "translateZ(0)";
-
       requestRef.current = requestAnimationFrame(updateParticles);
     };
 
@@ -148,12 +161,14 @@ const AnimatedBackground: React.FC = () => {
             height: `${particle.size}px`,
             left: `${particle.position.x}px`,
             top: `${particle.position.y}px`,
+            transform: `rotate(${particle.rotation}deg)`,
             boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
           }}
           initial={false}
           animate={{
             x: particle.position.x,
             y: particle.position.y,
+            rotate: particle.rotation,
           }}
           transition={{
             duration: 0,
@@ -171,3 +186,4 @@ const AnimatedBackground: React.FC = () => {
 };
 
 export default AnimatedBackground;
+
