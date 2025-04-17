@@ -18,7 +18,7 @@ export default {
 			}
 		},
 		fontFamily: {
-			sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+			sans: ['Space Grotesk', 'ui-sans-serif', 'system-ui'],
 			orbitron: ['Orbitron', 'sans-serif'],
 		},
 		extend: {
