@@ -17,20 +17,19 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate loading progress
     const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        const newProgress = prevProgress + 5;
-        return newProgress <= 100 ? newProgress : 100;
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 2;
       });
-    }, duration / 20);
+    }, duration / 50);
 
-    // Complete loading after duration
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(() => {
-        onComplete();
-      }, 500); // Extra time for exit animation
+      setTimeout(onComplete, 500);
     }, duration);
 
     return () => {
@@ -56,58 +55,67 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               transition={{ duration: 0.5 }}
               className="relative"
             >
-              {/* Logo container */}
-              <motion.div
-                animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 5, 0, -5, 0],
-                }}
-                transition={{ 
-                  repeat: Infinity, 
-                  duration: 3,
-                  ease: "easeInOut"
-                }}
-                className="mb-8"
-              >
-                <div className="relative w-40 h-40 flex items-center justify-center">
-                  {/* Animated glow effect behind logo */}
-                  <div className="absolute inset-0 bg-techblue-500/30 rounded-full blur-xl animate-pulse-slow"></div>
-                  
-                  {/* Logo */}
+              {/* Circular progress with logo */}
+              <div className="relative w-40 h-40">
+                {/* Animated circle */}
+                <svg className="w-full h-full" viewBox="0 0 100 100">
+                  <circle
+                    className="text-gray-800"
+                    strokeWidth="4"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="42"
+                    cx="50"
+                    cy="50"
+                  />
+                  <motion.circle
+                    className="text-techblue-500"
+                    strokeWidth="4"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="42"
+                    cx="50"
+                    cy="50"
+                    initial={{ strokeDasharray: "0 264" }}
+                    animate={{
+                      strokeDasharray: `${(progress * 264) / 100} 264`,
+                    }}
+                    transition={{ duration: 0.1 }}
+                    style={{
+                      transformOrigin: "50% 50%",
+                      transform: "rotate(-90deg)",
+                      strokeLinecap: "round",
+                    }}
+                  />
+                </svg>
+
+                {/* Logo */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
                   <img
                     src={logo}
                     alt="Logo"
-                    className="w-32 h-32 object-contain relative z-10"
+                    className="w-24 h-24 object-contain"
                   />
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
 
               {/* Loading text */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-white font-orbitron text-xl mt-4 text-center"
+                className="text-white font-orbitron text-xl mt-8 text-center"
               >
-                LOADING FUTURE TECH
-              </motion.p>
-
-              {/* Progress bar */}
-              <div className="w-64 h-1 bg-gray-800 rounded-full mt-4 overflow-hidden">
-                <motion.div
-                  className="h-full bg-techblue-500"
-                  initial={{ width: "0%" }}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ ease: "easeInOut" }}
-                />
-              </div>
-
-              {/* Progress percentage */}
-              <motion.p
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                className="text-white/80 text-sm mt-2"
-              >
-                {progress}%
+                CHAPTER INFO
               </motion.p>
             </motion.div>
           </div>

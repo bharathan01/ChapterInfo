@@ -68,11 +68,11 @@ const Navbar: React.FC<NavbarProps> = ({ logoVisible }) => {
               <Link to="/" className="flex items-center">
                 <img 
                   src="/logo.svg" 
-                  alt="Tech Bloom Logo" 
+                  alt="Chapter Info Logo" 
                   className="h-10 w-auto"
                 />
                 <span className="ml-2 text-white font-orbitron text-xl font-bold">
-                  <span className="text-techblue-400">TECH</span>BLOOM
+                  <span className="text-techblue-400">CHAPTER</span>INFO
                 </span>
               </Link>
             </motion.div>

@@ -13,33 +13,31 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [logoVisible, setLogoVisible] = useState(false);
+  const hasVisited = sessionStorage.getItem("hasVisited");
 
   useEffect(() => {
-    // Simulate page loading
-    setTimeout(() => {
-      setLoading(false);
-      // Only show logo in navbar after loading is complete
+    if (!hasVisited) {
+      sessionStorage.setItem("hasVisited", "true");
       setTimeout(() => {
-        setLogoVisible(true);
-      }, 500);
-    }, 3000);
-  }, []);
+        setLoading(false);
+        setTimeout(() => {
+          setLogoVisible(true);
+        }, 500);
+      }, 3000);
+    } else {
+      setLoading(false);
+      setLogoVisible(true);
+    }
+  }, [hasVisited]);
+
+  if (!hasVisited && loading) {
+    return <LoadingScreen onComplete={() => setLoading(false)} logo="/logo.svg" />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col custom-cursor">
-      {/* Loading screen */}
-      <LoadingScreen 
-        onComplete={() => setLoading(false)} 
-        logo="/logo.svg"
-      />
-      
-      {/* Custom cursor */}
       <CustomCursor color="#0413F2" />
-
-      {/* Navbar */}
       <Navbar logoVisible={logoVisible} />
-
-      {/* Main content with page transitions */}
       <AnimatePresence mode="wait">
         <motion.main
           key="main-content"
@@ -52,8 +50,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {children}
         </motion.main>
       </AnimatePresence>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

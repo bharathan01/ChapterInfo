@@ -27,21 +27,21 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="relative group animated-border h-full"
+      className="h-full"
     >
-      <div className="animated-border-content h-full glass-card p-6 flex flex-col">
+      <div className="relative h-full rounded-xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] hover:shadow-[0_8px_32px_0_rgba(4,19,242,0.2)] transition-all duration-500">
         {/* Background image if provided */}
         {imageUrl && (
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-10 rounded-lg"
+            className="absolute inset-0 bg-cover bg-center opacity-10"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
         )}
         
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 p-6">
           {/* Icon */}
-          <div className="mb-4 text-techblue-500 p-3 bg-techblue-500/10 inline-block rounded-xl">
+          <div className="mb-4 text-techblue-500 p-3 bg-techblue-500/10 inline-block rounded-xl backdrop-blur-md">
             {icon}
           </div>
           
@@ -56,15 +56,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           </p>
           
           {/* Link */}
-          <div className="mt-auto">
-            <Link
-              to={link}
-              className="inline-flex items-center text-techblue-400 hover:text-techblue-300 font-medium transition-colors group/link"
-            >
-              Learn More
-              <ChevronRight size={16} className="ml-1 transform group-hover/link:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+          <Link
+            to={link}
+            className="inline-flex items-center text-techblue-400 hover:text-techblue-300 font-medium transition-colors group"
+          >
+            Learn More
+            <ChevronRight size={16} className="ml-1 transform group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </motion.div>
