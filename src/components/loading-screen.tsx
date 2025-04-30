@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -10,7 +9,7 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({
   onComplete,
-  logo = "/logo.svg",
+  logo = "/logo.png",
   duration = 3000,
 }) => {
   const [isVisible, setIsVisible] = useState(true);

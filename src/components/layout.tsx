@@ -31,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, [hasVisited]);
 
   if (!hasVisited && loading) {
-    return <LoadingScreen onComplete={() => setLoading(false)} logo="/logo.svg" />;
+    return <LoadingScreen onComplete={() => setLoading(false)} logo="/logo.png" />;
   }
 
   return (

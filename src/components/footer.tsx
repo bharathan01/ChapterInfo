@@ -24,12 +24,12 @@ const Footer: React.FC = () => {
           <div>
             <div className="flex items-center mb-6">
               <img 
-                src="/logo.svg" 
+                src="/logo.png" 
                 alt="Tech Bloom Logo" 
                 className="h-10 w-auto mr-2"
               />
               <span className="text-white font-orbitron text-xl font-bold">
-                <span className="text-techblue-400">TECH</span>BLOOM
+                <span className="text-techblue-400">CHAPTER</span>INFO
               </span>
             </div>
             <p className="text-gray-400 mb-6">
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
               <span className="absolute -bottom-2 left-0 h-0.5 w-12 bg-techblue-500"></span>
             </h3>
             <ul className="space-y-3">
-              {["Home", "Services", "Products", "Careers", "About", "Contact"].map((item) => (
+              {["Home", "Services", "Careers", "About", "Contact"].map((item) => (
                 <li key={item}>
                   <Link 
                     to={item === "Home" ? "/" : `/${item.toLowerCase()}`} 
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
               <span className="absolute -bottom-2 left-0 h-0.5 w-12 bg-techblue-500"></span>
             </h3>
             <ul className="space-y-3">
-              {["IT Consulting", "Cloud Solutions", "Cybersecurity", "Web Development", "Mobile Apps", "AI & Machine Learning"].map((service) => (
+              {["IT Consulting", "Game Development", "Digital Marketing", "Web Development", "Mobile Apps", "AI & Machine Learning"].map((service) => (
                 <li key={service}>
                   <Link 
                     to="/services" 
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-3 text-techblue-400 flex-shrink-0" />
-                <span className="text-gray-400">info@techbloom.com</span>
+                <span className="text-gray-400">info@chapterinfo.com</span>
               </li>
             </ul>
           </div>
@@ -118,14 +118,14 @@ const Footer: React.FC = () => {
 
         {/* Bottom section with copyright */}
         <div className="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} TechBloom. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CHAPTERINFO. All rights reserved.</p>
           <div className="mt-2 flex justify-center space-x-6">
-            <Link to="/privacy-policy" className="hover:text-techblue-400 transition-colors">
+            {/* <Link to="/privacy-policy" className="hover:text-techblue-400 transition-colors">
               Privacy Policy
             </Link>
             <Link to="/terms-of-service" className="hover:text-techblue-400 transition-colors">
               Terms of Service
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

@@ -16,28 +16,30 @@ import {
   Laptop,
   HardDrive,
   Download,
-  PieChart
+  PieChart,
+  Megaphone
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Products: React.FC = () => {
   const products = [
     {
-      id: "secure",
-      title: "TechBloom Secure",
-      description: "Enterprise-grade security solution for comprehensive protection against cyber threats.",
-      category: "Cybersecurity",
-      icon: <Shield size={32} />,
+      id: "digital-marketing",
+      title: "CHAPTERINFO Digital Marketing",
+      description: "End-to-end digital marketing solutions to grow your brand and maximize your online reach.",
+      category: "Digital Marketing",
+      icon: <Megaphone size={32} />, 
       features: [
-        "Real-time threat detection and prevention",
-        "AI-powered security monitoring",
-        "Zero-trust network architecture",
-        "Behavioral analytics and anomaly detection",
-        "Automated incident response",
-        "Compliance management dashboard"
+        "SEO optimization and content strategy",
+        "Social media marketing and management",
+        "Paid advertising (Google Ads, Meta Ads)",
+        "Email marketing campaigns",
+        "Analytics and performance tracking",
+        "Brand reputation management"
       ],
-      image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" // Replaced with a better marketing-related image
     },
+
     {
       id: "cloudmanager",
       title: "CloudManager Pro",
@@ -72,7 +74,7 @@ const Products: React.FC = () => {
     },
     {
       id: "analytics",
-      title: "TechBloom Analytics",
+      title: "CHAPTERINFO Analytics",
       description: "Advanced analytics platform with AI-powered insights for data-driven business decisions.",
       category: "Business Intelligence",
       icon: <PieChart size={32} />,
@@ -122,7 +124,7 @@ const Products: React.FC = () => {
 
   const hardwareProducts = [
     {
-      title: "TechBloom Server Series",
+      title: "CHAPTERINFO Server Series",
       description: "High-performance servers designed for enterprise-grade computing needs.",
       icon: <Server size={24} />,
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
@@ -345,13 +347,13 @@ const Products: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             {[
               {
-                quote: "TechBloom's CloudManager Pro has completely transformed our IT operations, providing unprecedented visibility and control across our multi-cloud environment.",
+                quote: "CHAPTERINFO's CloudManager Pro has completely transformed our IT operations, providing unprecedented visibility and control across our multi-cloud environment.",
                 author: "Sarah Johnson",
                 position: "CTO, Global Enterprises",
                 image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
               },
               {
-                quote: "The security capabilities provided by TechBloom Secure have enabled us to stay ahead of emerging threats and maintain the highest standards of data protection.",
+                quote: "The security capabilities provided by CHAPTERINFO Secure have enabled us to stay ahead of emerging threats and maintain the highest standards of data protection.",
                 author: "Michael Chen",
                 position: "CISO, FinTech Solutions",
                 image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"

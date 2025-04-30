@@ -14,9 +14,8 @@ interface NavbarProps {
 }
 
 const navLinks: NavLink[] = [
-  { name: "Home", path: "/" },
   { name: "Services", path: "/services" },
-  { name: "Products", path: "/products" },
+  // { name: "Products", path: "/products" },
   { name: "Careers", path: "/careers" },
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
@@ -67,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoVisible }) => {
             >
               <Link to="/" className="flex items-center">
                 <img 
-                  src="/logo.svg" 
+                  src="/logo.png" 
                   alt="Chapter Info Logo" 
                   className="h-10 w-auto"
                 />
