@@ -13,14 +13,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.10
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the app
+        run: npm run build
+
+      - name: Copy project files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: "44.203.169.14"
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          source: "."  # copy all files (edit as needed)
+          target: "/home/ubuntu/chapter-info"
+          overwrite: true
+
+      - name: Restart app on EC2
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: "44.203.169.14"
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/chapter-info
-            git pull origin main
             npm install
-            pm2 restart chapter-info
+            pm2 delete chapter-info || true
+            pm2 serve dist 3000 --spa --name chapter-info
