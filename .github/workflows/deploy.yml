@@ -20,12 +20,9 @@ jobs:
         with:
           node-version: '20'
 
-      # Step 3: Build the app
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
-
-      - name: Build app
-        run: npm run build
 
       # Step 4: Copy build files and deploy
       - name: Deploy to EC2
@@ -37,6 +34,18 @@ jobs:
           source: "dist/*"
           target: "/home/ubuntu/chapter-info/dist"
 
+      # Step 5: Run build on the server (after copying the files)
+      - name: Run npm run build on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: "44.203.169.14"
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/chapter-info
+            npm run build
+
+      # Step 6: Restart app on EC2 via SSH
       - name: Restart app on EC2 via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
