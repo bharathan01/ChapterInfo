@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col custom-cursor">
+    <div className="min-h-screen flex flex-col custom-cursor overflow-hidden">
       <CustomCursor color="#0413F2" />
       <Navbar logoVisible={logoVisible} />
       <AnimatePresence mode="wait">

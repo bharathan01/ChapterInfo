@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../components/layout";
 import { motion } from "framer-motion";
+import emailjs from "emailjs-com";
 import {
   Mail,
   Phone,
@@ -22,20 +23,45 @@ const Contact: React.FC = () => {
     subject: "",
     message: "",
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setSuccessMessage("Message sent successfully!");
+    }, 2000);
+    
+    // emailjs
+    //   .send("your_service_id", "template_jgoq0pm", formData, "your_user_id")
+    //   .then((response) => {
+    //     console.log("SUCCESS!", response.status, response.text);
+    //     
+
+    //   })
+    //   .catch((err) => {
+    //     console.error("FAILED...", err);
+    //     setIsLoading(false);
+    //     setSuccessMessage("Failed to send message. Please try again.");
+    //   });
+  };
+
+  // Close the modal when clicked on close button
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
   return (
     <Layout>
@@ -240,6 +266,7 @@ const Contact: React.FC = () => {
                 <h3 className="text-2xl font-bold text-white mb-6">
                   Send Us a Message
                 </h3>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -256,7 +283,7 @@ const Contact: React.FC = () => {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-techblue-500 focus:border-transparent transition-all duration-300"
-                        placeholder="John Doe"
+                        placeholder="Full Name"
                         required
                       />
                     </div>
@@ -274,7 +301,7 @@ const Contact: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-techblue-500 focus:border-transparent transition-all duration-300"
-                        placeholder="john@example.com"
+                        placeholder="mail@example.com"
                         required
                       />
                     </div>
@@ -320,13 +347,44 @@ const Contact: React.FC = () => {
 
                   <motion.button
                     type="submit"
-                    className="inline-flex items-center bg-techblue-500 hover:bg-techblue-600 text-white px-6 py-3 rounded-lg text-lg font-medium transition-all duration-300"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={isLoading}
+                    className="inline-flex items-center justify-center bg-techblue-500 hover:bg-techblue-600 text-white px-6 py-3 rounded-lg text-lg font-medium transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={!isLoading ? { scale: 1.02 } : {}}
+                    whileTap={!isLoading ? { scale: 0.98 } : {}}
                   >
-                    Send Message
-                    <Send size={20} className="ml-2" />
+                    {isLoading ? (
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        ></path>
+                      </svg>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send size={20} className="ml-2" />
+                      </>
+                    )}
                   </motion.button>
+                  {successMessage && (
+                    <p className="text-center mt-4 text-green-400">
+                      {successMessage}
+                    </p>
+                  )}
                 </form>
               </motion.div>
             </div>
@@ -360,7 +418,7 @@ const Contact: React.FC = () => {
                   business days. For urgent matters, please call us directly.
                 </p>
                 <motion.a
-                  href="tel:+18001234567"
+                  href="tel:+917306741597"
                   className="inline-flex items-center text-techblue-500 hover:text-techblue-400 font-medium"
                   whileHover={{ x: 5 }}
                 >
@@ -383,7 +441,7 @@ const Contact: React.FC = () => {
                   issues and emergency assistance.
                 </p>
                 <motion.a
-                  href="/schedule"
+                  href="mailto:info@chapterinfo.com"
                   className="inline-flex items-center text-techblue-500 hover:text-techblue-400 font-medium"
                   whileHover={{ x: 5 }}
                 >

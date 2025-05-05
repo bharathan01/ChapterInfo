@@ -143,7 +143,7 @@ const Home: React.FC = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden ">
         <AnimatedBackground />
 
         <div className="container mx-auto px-4 py-20 relative z-10">
@@ -355,7 +355,7 @@ const Home: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <ImageReveal
-                src="medium-shot-smiley-business-woman.jpg"
+                src="https://i.postimg.cc/zvhs0W9g/medium-shot-smiley-business-woman.jpg"
                 alt="Team collaborating on innovative solutions"
                 className="rounded-xl h-full w-full object-cover"
               />
@@ -392,7 +392,7 @@ const Home: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <ImageReveal
-                src="digital-graph-with-businessman-hand-overlay.jpg"
+                src="https://i.postimg.cc/MTgTn77M/digital-graph-with-businessman-hand-overlay.jpg"
                 alt="Team working together"
                 className="rounded-xl h-full w-full object-cover"
               />
@@ -446,7 +446,7 @@ const Home: React.FC = () => {
                   of everything we do. We believe that technology should
                   simplify lives, fuel creativity, and open new possibilities
                   for businesses and communities. Through our mission, we aim to
-                  shape a better tomorrow — one innovation at a time.
+                  shape a better tomorrow one innovation at a time.
                 </p>
               </AnimatedCard>
             </div>
